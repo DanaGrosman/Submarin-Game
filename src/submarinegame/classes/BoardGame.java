@@ -150,7 +150,7 @@ public class BoardGame {
 	}
 
 	public void setMissOnBoard(int x, int y) {
-		if (boardMatrix[x][y] != '#')
+		if (boardMatrix[x][y] != '#') // TODO: Remove this line when we have exceptions
 			boardMatrix[x][y] = 'M';
 	}
 }

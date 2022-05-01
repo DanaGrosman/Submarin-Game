@@ -54,23 +54,22 @@ public class Game {
 			getGuess();
 			guesses--;
 		}
-		
+
 		player.saveGuessesToFile(guessesFile);
-		
 		replay();
 	}
 
 	private void replay() {
 		boardGameWithGuesses.intBoardGame();
-		
+
 		try (FileInputStream file = new FileInputStream(guessesFile);
 				ObjectInputStream inputStream = new ObjectInputStream(file)) {
 
 			Player player = (Player) inputStream.readObject();
 			System.out.println(player);
 
-			for(int i=0; i< player.getGuesses().length;i++) {
-				if(player.getGuesses()[i]!=null) {
+			for (int i = 0; i < player.getGuesses().length; i++) {
+				if (player.getGuesses()[i] != null) {
 					Guess guess = (Guess) inputStream.readObject();
 					System.out.println(guess);
 					setGuessOnboard(guess.getxCoordinate(), guess.getyCoordinate());
@@ -81,7 +80,7 @@ public class Game {
 
 		} catch (IOException | ClassNotFoundException e) {
 			System.out.println(e);
-		}		
+		}
 	}
 
 	private void initPlayer() {
@@ -92,9 +91,8 @@ public class Game {
 	}
 
 	private void getGuess() {
-		
-		// TODO: create exceptions
 
+		// TODO: create exceptions
 		int x, y;
 //		boolean inputIsOK = true;
 
@@ -104,6 +102,7 @@ public class Game {
 		x = scanner.nextInt();
 		System.out.println("y coordinate: ");
 		y = scanner.nextInt();
+
 		setGuessOnboard(x, y);
 		boardGameWithGuesses.printBoardGame();
 //				inputIsOK = true;
@@ -113,10 +112,10 @@ public class Game {
 //				System.out.println("Input must be an integer.\n Please try again: ");
 //			}
 //		}
-		
+
 		player.getGuesses()[GUESSES - guesses] = new Guess(x, y, GUESSES - guesses);
 	}
-	
+
 	private void setGuessOnboard(int x, int y) {
 		if (boardGame.checkGuess(x, y)) {
 			boardGameWithGuesses.setHitOnBoard(x, y);
