@@ -140,4 +140,17 @@ public class BoardGame {
 			boardMatrix[row][col] = 'S';
 		}
 	}
+
+	public boolean checkGuess(int x, int y) {
+		return boardMatrix[x][y] == 'S' ? true : false;
+	}
+
+	public void setHitOnBoard(int x, int y) {
+		boardMatrix[x][y] = 'H';
+	}
+
+	public void setMissOnBoard(int x, int y) {
+		if (boardMatrix[x][y] != '#')
+			boardMatrix[x][y] = 'M';
+	}
 }
