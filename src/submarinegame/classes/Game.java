@@ -11,6 +11,9 @@ public class Game {
 
 	protected final int START_POINTS = 1000;
 	protected final int GUESSES = 5;
+	protected final int BOARD_WIDTH = 20;
+	protected final int BOARD_LENGTH = 10;
+
 
 	protected int points;
 	protected int guesses;
@@ -25,8 +28,8 @@ public class Game {
 		setPoints(START_POINTS);
 		setGusses(GUESSES);
 		setHits(0);
-		boardGame = new BoardGame(10, 20);
-		boardGameWithGuesses = new BoardGame(10, 20);
+		boardGame = new BoardGame(BOARD_LENGTH, BOARD_WIDTH);
+		boardGameWithGuesses = new BoardGame(BOARD_LENGTH, BOARD_WIDTH);
 		player = new Player();
 	}
 
@@ -60,7 +63,7 @@ public class Game {
 	}
 
 	public void replay(String strFile) {
-		BoardGame boardGameReplay = new BoardGame(10, 20);
+		BoardGame boardGameReplay = new BoardGame(BOARD_LENGTH, BOARD_WIDTH);
 		boardGameReplay.initBoardGame();
 
 		try (FileInputStream file = new FileInputStream(strFile);
