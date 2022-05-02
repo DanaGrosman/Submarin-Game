@@ -45,8 +45,8 @@ public class Game {
 	public void play() {
 		initPlayer();
 
-		boardGame.intBoardGame();
-		boardGameWithGuesses.intBoardGame();
+		boardGame.initBoardGame();
+		boardGameWithGuesses.initBoardGame();
 		boardGame.placeSubmarinesOnBoard();
 		boardGameWithGuesses.printBoardGame();
 
@@ -56,13 +56,14 @@ public class Game {
 		}
 
 		player.saveGuessesToFile(guessesFile);
-		replay();
+		// replay();
 	}
 
-	private void replay() {
-		boardGameWithGuesses.intBoardGame();
+	public void replay(String strFile) {
+		BoardGame boardGameReplay = new BoardGame(10, 20);
+		boardGameReplay.initBoardGame();
 
-		try (FileInputStream file = new FileInputStream(guessesFile);
+		try (FileInputStream file = new FileInputStream(strFile);
 				ObjectInputStream inputStream = new ObjectInputStream(file)) {
 
 			Player player = (Player) inputStream.readObject();
@@ -73,7 +74,7 @@ public class Game {
 					Guess guess = (Guess) inputStream.readObject();
 					System.out.println(guess);
 					setGuessOnboard(guess.getxCoordinate(), guess.getyCoordinate());
-					boardGameWithGuesses.printBoardGame();
+					boardGameReplay.printBoardGame();
 					// TODO: create delay
 				}
 			}
@@ -91,7 +92,6 @@ public class Game {
 	}
 
 	private void getGuess() {
-
 		// TODO: create exceptions
 		int x, y;
 //		boolean inputIsOK = true;

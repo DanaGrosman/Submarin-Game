@@ -42,6 +42,8 @@ public class Player implements Serializable{
 	public void saveGuessesToFile(File guessesFile) {
 		try (FileOutputStream file = new FileOutputStream(guessesFile);
 				ObjectOutputStream outputStream = new ObjectOutputStream(file)) {
+			// TODO: save submarine board to file
+			//outputStream.writeObject();
 			outputStream.writeObject(this);
 
 			for(int i=0; i< guesses.length; i++) {

@@ -26,7 +26,7 @@ public class BoardGame {
 		return cols;
 	}
 
-	public void intBoardGame() {
+	public void initBoardGame() {
 		for (int i = 0; i < cols; i++) {
 			boardMatrix[0][i] = '#';
 		}
