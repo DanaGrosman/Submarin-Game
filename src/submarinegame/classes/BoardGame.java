@@ -1,9 +1,12 @@
 package submarinegame.classes;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.Random;
 
-public class BoardGame {
+public class BoardGame implements Serializable{
+
+	private static final long serialVersionUID = -287706010293392616L;
 	protected final int SUBMARINES_NUMBER = 5;
 	protected static Random rand = new Random();
 
@@ -24,6 +27,10 @@ public class BoardGame {
 
 	public int getCols() {
 		return cols;
+	}
+	
+	public Submarine[] getSubmarines() {
+		return submarines;
 	}
 
 	public void initBoardGame() {

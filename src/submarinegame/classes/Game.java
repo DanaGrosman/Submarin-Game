@@ -4,16 +4,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Game {
+public class Game implements Serializable{
+
+	private static final long serialVersionUID = 362634921245503827L;
 	protected static Scanner scanner = new Scanner(System.in);
 
 	protected final int START_POINTS = 1000;
 	protected final int GUESSES = 5;
 	protected final int BOARD_WIDTH = 20;
 	protected final int BOARD_LENGTH = 10;
-
 
 	protected int points;
 	protected int guesses;
@@ -22,7 +24,7 @@ public class Game {
 	protected BoardGame boardGameWithGuesses;
 
 	protected Player player;
-	protected File guessesFile;
+	protected File gameFile;
 
 	public Game() {
 		setPoints(START_POINTS);
@@ -44,6 +46,26 @@ public class Game {
 	private void setPoints(int points) {
 		this.points = points;
 	}
+	
+	public int getPoints() {
+		return points;
+	}
+	
+	public int getGuesses() {
+		return guesses;
+	}
+	
+	public int getHits() {
+		return hits;
+	}
+	
+	public BoardGame getBoardGame() {
+		return boardGame;
+	}
+	
+	public BoardGame getBoardGameWithGuesses() {
+		return boardGameWithGuesses;
+	}
 
 	public void play() {
 		initPlayer();
@@ -58,8 +80,8 @@ public class Game {
 			guesses--;
 		}
 
-		player.saveGuessesToFile(guessesFile);
-		// replay();
+		player.saveGameDetailsToFile(gameFile);
+		//player.saveGuessesToFile(gameFile);
 	}
 
 	public void replay(String strFile) {
@@ -72,15 +94,18 @@ public class Game {
 			Player player = (Player) inputStream.readObject();
 			System.out.println(player);
 
-			for (int i = 0; i < player.getGuesses().length; i++) {
-				if (player.getGuesses()[i] != null) {
-					Guess guess = (Guess) inputStream.readObject();
-					System.out.println(guess);
-					setGuessOnboard(guess.getxCoordinate(), guess.getyCoordinate());
-					boardGameReplay.printBoardGame();
-					// TODO: create delay
-				}
-			}
+			Game game = (Game) inputStream.readObject();
+			System.out.println(game);
+			
+//			for (int i = 0; i < player.getGuesses().length; i++) {
+//				if (player.getGuesses()[i] != null) {
+//					Guess guess = (Guess) inputStream.readObject();
+//					System.out.println(guess);
+//					setGuessOnboard(guess.getxCoordinate(), guess.getyCoordinate());
+//					boardGameReplay.printBoardGame();
+//					// TODO: create delay
+//				}
+////			}
 
 		} catch (IOException | ClassNotFoundException e) {
 			System.out.println(e);
@@ -90,8 +115,9 @@ public class Game {
 	private void initPlayer() {
 		// TODO: get player info from user
 		player = new Player("Dana", "dana@gmail.com", "0526998773");
+		player.addGame(this);
 		player.initGuesses(GUESSES);
-		guessesFile = new File("gameFiles/guessesFile.txt");
+		gameFile = new File("gameFiles/guessesFile.txt");
 	}
 
 	private void getGuess() {
@@ -126,4 +152,10 @@ public class Game {
 		} else
 			boardGameWithGuesses.setMissOnBoard(x, y);
 	}
+
+	@Override
+	public String toString() {
+		return "Game [points=" + points + ", hits=" + hits + ", boardGame=" + boardGame + "]";
+	}
+
 }
